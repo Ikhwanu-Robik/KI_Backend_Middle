@@ -32,7 +32,7 @@
                     <h4 class="text-lg font-semibold">{{ $agent->name }}</h4>
                     <br>
                     <p>{{ $agent->description }}</p>
-                    <img src="{{ asset($agent->image) }}" alt="{{ $agent->image }}" class="w-4/5">
+                    <img src="{{ asset('/storage/avatars/' . $agent->image) }}" alt="{{ $agent->image }}" class="w-4/5">
                     {{-- problem arise here, the image is stored inside 'storage/app/private/public/avatars' instead of just in the public folder --}}
                     <div>
                         <a href="/edit/{{ $agent->id }}" class="text-yellow-500">Edit</a>
