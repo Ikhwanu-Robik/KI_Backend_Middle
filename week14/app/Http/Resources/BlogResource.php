@@ -20,7 +20,7 @@ class BlogResource extends JsonResource
 		"title" => $this->title,
 		"slug" => $this->slug,
 		"description" => $this->description,
-		"image" => $this->image,
+		"image" => env('ASSET_URL') .'/'. $this->image,
 	    ]; 
     }
 }
