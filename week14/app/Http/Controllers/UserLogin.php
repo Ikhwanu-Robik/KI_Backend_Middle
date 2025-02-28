@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use App\JSONAPIResponse;
+use App\Actions\UserLoginAction;
 
 class UserLogin extends Controller
 {
@@ -13,19 +12,14 @@ class UserLogin extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(LoginRequest $request)
+    public function __invoke(LoginRequest $request, UserLoginAction $action)
     {
-        $credentials = $request->validated();
-
-	if(Auth::attempt($credentials)) {
-		$user = $request->user();	
-
-		$token = $user->createToken('user_token');	
-		
-		return $this->success(['token' => $token->plainTextToken]);
-	}
-	else {
-		return "Login failed";
-	}
+	    $token = $action->execute($request->validated());
+	    if($token) {
+		    return $this->success($token, "login succesful");
+	    }
+	    else {
+		    return $this->error("login failed");
+	    }
     }
 }

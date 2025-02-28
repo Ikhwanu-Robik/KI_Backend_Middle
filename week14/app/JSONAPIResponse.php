@@ -11,4 +11,11 @@ trait JSONAPIResponse
 			'data' => $data
 		], $code);
 	}	
+
+	public function error($message = 'error', $code = 400) {
+		return response()->json([
+			'status' => 'error',
+			'message' => $message,
+		], $code);
+	}
 }

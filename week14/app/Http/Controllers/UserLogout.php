@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\LogoutRequest;
-use Illuminate\Support\Facades\Auth;
 use App\JSONAPIResponse;
+use App\Actions\UserLogoutAction;
 
 class UserLogout extends Controller
 {
@@ -13,9 +12,9 @@ class UserLogout extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(LogoutRequest $request)
+    public function __invoke(LogoutRequest $request, UserLogoutAction $action)
     {
-	    $request->user()->currentAccessToken()->delete();
+	    $action->execute();
 	   
 	    return $this->success(message: 'Logged out');
     }

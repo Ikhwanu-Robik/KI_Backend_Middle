@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\JSONAPIResponse;
-use Illuminate\Http\Request;
 use App\Http\Requests\SignupRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Actions\UserSignupAction;
 
 class UserSignup extends Controller
 {
     use JSONAPIResponse;
 
-    public function __invoke(SignupRequest $request) {
-        $validated = $request->validated();
-
-	$validated['password'] = Hash::make($validated['password']);
-       
-        User::createOrFirst($validated);
-
+    public function __invoke(SignupRequest $request, UserSignupAction $action) {
+        $action->execute($request->validated()); 
         return $this->success(message: "Successfully signed up");
     }
 }
